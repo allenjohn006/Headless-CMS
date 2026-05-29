@@ -1,4 +1,4 @@
-# Antigravity Headless CMS Engine 🚀
+# Headless CMS Engine 🚀
 
 An enterprise-grade, highly performant, production-ready Headless CMS Engine built from scratch. This decoupled architecture allows non-technical content creators to define schema architectures and compile dynamic content on-the-fly, while developers consume robust, cached APIs.
 
