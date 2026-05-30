@@ -84,3 +84,36 @@ def get_fields(
     """
     fields = db.query(Field).filter(Field.collection_id == collection_id).all()
     return fields
+
+@router.delete("/{collection_id}", status_code=204)
+def delete_collection(
+    collection_id: UUID,
+    db: Session = Depends(get_db),
+    current_user = Depends(get_current_active_admin)
+):
+    """
+    Delete a Collection and all its fields/content (Admin only)
+    """
+    collection = db.query(Collection).filter(Collection.id == collection_id).first()
+    if not collection:
+        raise HTTPException(status_code=404, detail="Collection not found")
+    db.delete(collection)
+    db.commit()
+    return None
+
+@router.delete("/{collection_id}/fields/{field_id}", status_code=204)
+def delete_field(
+    collection_id: UUID,
+    field_id: UUID,
+    db: Session = Depends(get_db),
+    current_user = Depends(get_current_active_admin)
+):
+    """
+    Delete a Field from a Collection (Admin only)
+    """
+    field = db.query(Field).filter(Field.id == field_id, Field.collection_id == collection_id).first()
+    if not field:
+        raise HTTPException(status_code=404, detail="Field not found")
+    db.delete(field)
+    db.commit()
+    return None

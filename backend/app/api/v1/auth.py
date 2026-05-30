@@ -39,6 +39,16 @@ def register_user(
     """
     Register a new user
     """
+    if not settings.ALLOW_PUBLIC_REGISTRATION:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Public registration is disabled",
+        )
+    if len(user_in.password) < settings.MIN_PASSWORD_LENGTH:
+        raise HTTPException(
+            status_code=400,
+            detail=f"Password must be at least {settings.MIN_PASSWORD_LENGTH} characters",
+        )
     user = db.query(User).filter(User.email == user_in.email).first()
     if user:
         raise HTTPException(

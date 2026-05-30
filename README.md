@@ -73,7 +73,16 @@ The codebase has been refactored to support **SQLite Fallback** out-of-the-box, 
    ```bash
    pip install -r requirements.txt
    ```
-3. Start the FastAPI development server:
+3. Copy environment defaults:
+   ```bash
+   copy .env.example .env
+   ```
+   *Update secrets and database values for your environment.*
+4. Run database migrations (PostgreSQL recommended):
+   ```bash
+   alembic upgrade head
+   ```
+5. Start the FastAPI development server:
    ```bash
    python -m uvicorn app.main:app --reload
    ```

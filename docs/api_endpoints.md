@@ -72,6 +72,16 @@ Authorization: Bearer <your_jwt_access_token>
   }
   ```
 
+### 3. Delete a Collection
+- **Endpoint**: `DELETE /api/v1/collections/{collection_id}`
+- **Access**: Admin Only
+- **Response**: `204 No Content`
+
+### 4. Delete a Field
+- **Endpoint**: `DELETE /api/v1/collections/{collection_id}/fields/{field_id}`
+- **Access**: Admin Only
+- **Response**: `204 No Content`
+
 ---
 
 ## ✍️ Dynamic Content CRUD (The Engine)
@@ -106,6 +116,11 @@ Authorization: Bearer <your_jwt_access_token>
   ```
 - **Response**: `200 OK`
 - *Note: This action automatically creates a JSON snapshot of the prior record inside the `audit_logs` database before rewriting the row!*
+
+### 3. Delete Content
+- **Endpoint**: `DELETE /api/v1/content/{collection_slug}/{content_id}`
+- **Access**: Admin or Editor
+- **Response**: `204 No Content`
 
 ---
 
@@ -163,3 +178,8 @@ Allows editors to upload media assets, auto-compiling them to highly optimized `
     "mime_type": "image/webp"
   }
   ```
+
+### Delete Media
+- **Endpoint**: `DELETE /api/v1/media/{media_id}`
+- **Access**: Admin or Editor
+- **Response**: `204 No Content`

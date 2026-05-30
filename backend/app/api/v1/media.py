@@ -60,3 +60,24 @@ async def upload_image(
         "filename": media.filename,
         "mime_type": media.mime_type
     }
+
+@router.delete("/{media_id}", status_code=204)
+def delete_media(
+    media_id: uuid.UUID,
+    db: Session = Depends(get_db),
+    current_user=Depends(get_current_active_editor)
+):
+    """
+    Delete a media asset and its file (Editors/Admins only)
+    """
+    media = db.query(Media).filter(Media.id == media_id).first()
+    if not media:
+        raise HTTPException(status_code=404, detail="Media not found")
+
+    filepath = os.path.join(settings.UPLOAD_DIR, media.filename)
+    if os.path.exists(filepath):
+        os.remove(filepath)
+
+    db.delete(media)
+    db.commit()
+    return None
